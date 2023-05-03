@@ -1,0 +1,138 @@
+﻿@model ProductVM;
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+
+                <h2 class="text-white py-2">@((Model.Product.Id != 0 && Model.Product.Id != null) ? "Update" : "Create ") Product</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body  p-4">
+        <form asp-action="Upsert" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <!-- Main div -->
+            <div class="border p-3 row col-10" >
+
+                <!-- Validation Summary-->
+                @*<div asp-validation-summary="All" class="my-2 text-danger lead fs-6"></div>*@
+
+                <!-- Hidden product id -->
+                    <input asp-for="Product.Id" hidden />
+                    <input asp-for="Product.ImageUrl" hidden />
+
+                <!-- Product Title -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.Title" />
+                    <label class="ms-2 " asp-for="Product.Title"></label>
+                    <span asp-validation-for="Product.Title" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product ISBN -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.ISBN" />
+                    <label class="ms-2 " asp-for="Product.ISBN"></label>
+                    <span asp-validation-for="Product.ISBN" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Author -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.Author" />
+                    <label class="ms-2 " asp-for="Product.Author"></label>
+                    <span asp-validation-for="Product.Author" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Price -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.Price" />
+                    <label class="ms-2 " asp-for="Product.Price"></label>
+                    <span asp-validation-for="Product.Price" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product List Price -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.ListPrice" />
+                    <label class="ms-2 " asp-for="Product.ListPrice"></label>
+                    <span asp-validation-for="Product.ListPrice" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Price50 -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.Price50" />
+                    <label class="ms-2 " asp-for="Product.Price50"></label>
+                    <span asp-validation-for="Product.Price50" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Price100 -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <input class="form-control border-0 shadow" asp-for="Product.Price100" />
+                    <label class="ms-2 " asp-for="Product.Price100"></label>
+                    <span asp-validation-for="Product.Price100" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Category -->
+                <div class="form-floating py-2 col-12 col-md-6">
+                    <select class="form-select border-0 shadow" asp-for="Product.CategoryId" asp-items="@Model.CategoryList">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <label class="ms-2 " asp-for="Product.Category"></label>
+                    <span asp-validation-for="Product.Category" class="lead text-danger fs-6 my-2"></span>
+                </div>
+
+                <!-- Product Description -->
+                <div class="py-2 col-12 ">
+                    <label class="ms-2 text-muted" asp-for="Product.Description"></label>
+                    <textarea class="form-control border-0 shadow" rows="4" asp-for="Product.Description"></textarea>
+
+                </div>
+
+                <!-- Product Image Url -->
+                <div class="form-floating py-2 col-12 ">
+                    <input type="file" name="file" class="form-control border-0 shadow" />
+                    <label class="ms-2 " asp-for="Product.ImageUrl"></label>
+                </div>
+
+                <!-- Submit button & back to list-->
+                <div class="container col-12 mt-4 text-center mx-auto">
+                    @if (Model.Product.Id != 0 && Model.Product.Id != 0)
+                    {
+                        <button type="submit" role="button" class="btn btn-primary px-3 rounded-pill ms-3  col-6 col-md-3">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" role="button" class="btn btn-primary px-3 rounded-pill ms-3  col-6 col-md-3">Create</button>
+                    }
+
+                    <!-- Back to index-->
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary rounded-pill col-5 col-md-3">Back To list</a>
+
+                </div>
+
+            </div>
+
+            <!-- Image div-->
+            <div class="col-2 px-5 py-2">
+                <img src="@Model.Product.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bc00b0;" />
+            </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+
+@section Scripts{
+    @{
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                plugins: 'anchor autolink charmap codesample emoticons  lists   table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough |  align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            });
+        </script>
+
+        <partial name="_ValidationScriptsPartial" />
+    }
+ }
